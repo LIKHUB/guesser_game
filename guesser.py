@@ -9,15 +9,15 @@ tried_symbols_all = []
 guessed = False
 cnt = 0
 
-while cnt < 6:
-    guess = input()
-    if guess.isalpha():
-        if guess not in tried_symbols_all:
-            if len(guess) == 1:
+while not guessed:
+    guess = input()#Ввод слова или символа для угадывания
+    if guess.isalpha():#Проверка на то, что введенная строка содержит только буквы
+        if guess not in tried_symbols_all:#Проверка на повторение
+            if len(guess) == 1:#Случай, если ввели одну букву
                 tried_symbols_all += test.word_as_symbol_combination(guess)
                 tried_symbols_all = test.delete_repeat(tried_symbols_all)
 
-                if guess in word:#Если введенная буква в слове, то нахождение ее индекса в загаданном слове
+                if guess.lower() in word.lower():#Если введенная буква в слове, то нахождение ее индекса в загаданном слове
                     for i in range(len(word)):
                         if word[i].lower() == guess.lower():
                             indices.append(i)
@@ -28,6 +28,15 @@ while cnt < 6:
                         word_guess = ''.join(word_guess)
                     ind_list = indices
                     indices = []
+
+                if word_guess.lower() == word.lower():
+                    guessed = True
+                    cnt+=1
+                    print('Congrats, you won')
+                    print(cnt, tried_symbols_all, ind_list, word_guess, word, guessed)
+                    break
+                
+                cnt+=1
 
             elif len(guess) > 1:
                 tried_symbols_all += test.word_as_symbol_combination(guess)
@@ -47,12 +56,22 @@ while cnt < 6:
                                          indices = []
                         else:
                             continue
-                
+
+                if word_guess.lower() == word.lower():
+                    guessed = True
+                    cnt+=1
+                    print('Congrats, you won')
+                    print(cnt, tried_symbols_all, ind_list, word_guess, word, guessed)
+                    break
+            
+                cnt+=1
         else:
             print('You have tried that already')
 
     else:
         print('Enter charachters only')
     
-    cnt+=1
-    print(tried_symbols_all, ind_list, word_guess, word)
+    print(cnt, tried_symbols_all, ind_list, word_guess, word, guessed)
+    if cnt == 6:
+        print('You did not win')
+        break
