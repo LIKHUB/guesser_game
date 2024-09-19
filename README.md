@@ -1,0 +1,1 @@
+It is a game where you can guess words. YOu can either type one symbol or a word and if the symbol or word characters are found in the word it opens and the user can see where these characters are found in the word. 
